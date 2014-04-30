@@ -63,6 +63,9 @@ gem_group :production do
   gem 'rails_12factor'
 end
 
+# Remove blank lines
+gsub_file('Gemfile', /^[ \t]*$\r?\n/, '')
+
 initializer 'generators.rb', <<-RUBY
 Rails.application.config.generators do |g|
   g.test_framework :rspec,
@@ -152,6 +155,9 @@ run "rm -rf test/"
 # Initialize guard plugins
 run "bundle exec guard init bundler rails livereload rspec brakeman"
 
+# generate binstubs for spring
+run "bundle exec spring binstub --all"
+
 # Add Unicorn config for Heroku
 file 'config/unicorn.rb', <<-RUBY
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
@@ -186,6 +192,7 @@ run "cat << EOF >> .gitignore
 /log/*.log
 /tmp
 database.yml
+.env
 doc/
 *.swp
 *~
