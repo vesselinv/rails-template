@@ -39,7 +39,7 @@ gem_group :development do
   gem 'meta_request'
   gem 'awesome_print'
   gem 'bullet'
-  gem 'debugger'
+  gem 'debugger2', github: 'ko1/debugger2'
   gem 'spring'
   gem 'spring-commands-rspec'
 end
